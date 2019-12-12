@@ -1,6 +1,6 @@
 formatVersion: 1
 name: sbowe-MultiVM
-version: 1
+version: 2
 inputs: {}
 resources:
   Cloud_NSX_LoadBalancer_1:
@@ -28,7 +28,7 @@ resources:
       image: Ubuntu-16
       count: 3
       cpuCount: 1
-      totalMemoryMB: 1024
+      totalMemoryMB: 2024
       constraints:
         - tag: 'env:vsphere'
       networks:
