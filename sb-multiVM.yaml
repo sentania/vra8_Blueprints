@@ -1,0 +1,55 @@
+formatVersion: 1
+inputs: {}
+resources:
+  Cloud_NSX_LoadBalancer_1:
+    type: Cloud.NSX.LoadBalancer
+    metadata:
+      layoutPosition:
+        - 0
+        - 0
+    properties:
+      routes:
+        - protocol: HTTP
+          port: 80
+          instanceProtocol: HTTP
+          instancePort: 80
+      network: '${resource.MyNetworkName.id}'
+      instances: '${resource.Cloud_vSphere_Machine_1[*].id}'
+      internetFacing: false
+  Cloud_vSphere_Machine_1:
+    type: Cloud.vSphere.Machine
+    metadata:
+      layoutPosition:
+        - 0
+        - 1
+    properties:
+      image: Ubuntu-16
+      count: 3
+      cpuCount: 1
+      totalMemoryMB: 1024
+      constraints:
+        - tag: 'env:vsphere'
+      networks:
+        - network: '${resource.MyNetworkName.id}'
+  Cloud_SecurityGroup_1:
+    type: Cloud.SecurityGroup
+    dependsOn:
+      - Cloud_vSphere_Machine_1
+    metadata:
+      layoutPosition:
+        - 0
+        - 2
+    properties:
+      securityGroupType: existing
+      name: App
+      constraints:
+        - tag: 'env:vsphere'
+  MyNetworkName:
+    type: Cloud.NSX.Network
+    metadata:
+      layoutPosition:
+        - 1
+        - 0
+    properties:
+      networkType: routed
+      name: MyNetworkName
