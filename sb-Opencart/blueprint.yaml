@@ -13,16 +13,15 @@ inputs:
   image:
     type: string
     enum:
-      - Ubuntu-16
-    default: Ubuntu-16
+      - ubuntu16
+    default: ubuntu16
     title: Select Image/OS
   size:
     type: string
     enum:
-      - small
-      - medium
-      - large
-    default: medium
+      - Small
+      - Standard
+    default: Small
     description: Size of Nodes
     title: Node Size
   clusterSize:
@@ -51,10 +50,6 @@ resources:
     type: Cloud.Machine
     dependsOn:
       - mysql
-    metadata:
-      layoutPosition:
-        - 0
-        - 1
     properties:
       flavor: '${input.size}'
       image: '${input.image}'
@@ -138,16 +133,12 @@ resources:
           - echo "ocuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
           - echo 'Cloud-init is done!' >> /tmp/finished.txt
       constraints:
-        - tag: '${"env:" + to_lower(input.environment)}'
+        - tag: '${to_lower(input.environment)}'
       networks:
         - name: '${resource.Cloud_Network_1.name}'
           network: '${resource.Cloud_Network_1.id}'
   mysql:
     type: Cloud.Machine
-    metadata:
-      layoutPosition:
-        - 0
-        - 2
     properties:
       flavor: '${input.size}'
       image: '${input.image}'
@@ -195,16 +186,12 @@ resources:
           - mysql -u root -e 'flush privileges'
           - echo 'Cloud-init is done!' >> /tmp/finished.txt
       constraints:
-        - tag: '${"env:" + to_lower(input.environment)}'
+        - tag: '${to_lower(input.environment)}'
       networks:
         - name: '${resource.Cloud_Network_1.name}'
           network: '${resource.Cloud_Network_1.id}'
   Cloud_LoadBalancer_1:
     type: Cloud.LoadBalancer
-    metadata:
-      layoutPosition:
-        - 0
-        - 0
     properties:
       name: OC-LB
       routes:
@@ -217,12 +204,8 @@ resources:
       internetFacing: true
   Cloud_Network_1:
     type: Cloud.Network
-    metadata:
-      layoutPosition:
-        - 1
-        - 0
     properties:
       name: OC_Network
       networkType: existing
       constraints:
-        - tag: '${"env:" + to_lower(input.environment)}'
+        - tag: '${to_lower(input.environment)}'
