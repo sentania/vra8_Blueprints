@@ -1,11 +1,10 @@
 formatVersion: 1
-name: sbowe-Opencart
-version: 1
+name: Multi-Cloud Web App
+version: 1.1
 inputs:
   environment:
     type: string
     enum:
-      - AWS
       - Azure
     default: AWS
     title: Select Environment for Deployment
