@@ -1,12 +1,12 @@
 formatVersion: 1
 name: Multi-Cloud Web App
-version: 1.1
+version: 1.11
 inputs:
   environment:
     type: string
     enum:
       - Azure
-    default: AWS
+    default: Azure
     title: Select Environment for Deployment
     description: Target Environment
   image:
