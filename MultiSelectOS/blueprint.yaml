@@ -1,0 +1,50 @@
+formatVersion: 1
+name: Windows 2019 - Bare
+description: Installs a basic CentOS 7 Server
+inputs:
+  deploymentTarget:
+    type: string
+    description: Cloud Target
+    title: Cloud Target
+    enum:
+      - comp
+      - cloud
+    default: comp
+  flavor:
+    type: string
+    enum:
+      - Small
+      - Standard
+    description: Size of Server
+    title: Node Size
+    default: Small
+  image:
+    type: string
+    enum:
+      - CentOS7
+      - Ubuntu18
+      - Windows2019
+      - ubuntu16
+    title: OS Image
+    default: CentOS7
+resources:
+  VirtualMachine:
+    type: Cloud.Machine
+    properties:
+      constraints:
+        - tag: '${input.deploymentTarget}'
+      name: MultiOSVM
+      image: '${input.image}'
+      flavor: '${input.flavor}'
+      networks:
+        - name: '${resource.ServerNetwork.name}'
+          network: '${resource.ServerNetwork.id}'
+      storage:
+        constraints:
+          - tag: '${input.deploymentTarget}'
+  ServerNetwork:
+    type: Cloud.Network
+    properties:
+      networkType: existing
+      constraints:
+        - tag: '${input.deploymentTarget}'
