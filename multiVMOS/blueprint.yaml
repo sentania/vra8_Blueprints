@@ -1,7 +1,7 @@
 formatVersion: 1
-name: Lab Multi OS Selection
-version: 1.02
-description: Installs a basic server in my Lab
+name: Lab Multi OS and VM Selection
+version: 0.999
+description: Installs multiple basic servers in my Lab
 inputs:
   deploymentTarget:
     type: string
