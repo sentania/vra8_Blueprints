@@ -1,6 +1,7 @@
 formatVersion: 1
 name: Windows 2019 - Bare
-description: Installs a basic CentOS 7 Server
+version: 1.01
+description: Installs a basic server in my Lab
 inputs:
   deploymentTarget:
     type: string
