@@ -1,6 +1,6 @@
 formatVersion: 1
-name: Windows 2019 - Bare
-version: 1.01
+name: Lab Multi OS Selection
+version: 1.02
 description: Installs a basic server in my Lab
 inputs:
   deploymentTarget:
