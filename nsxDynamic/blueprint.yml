@@ -1,5 +1,5 @@
 formatVersion: 1
-name: gitimport
+name: NSX Dynamic CentOS
 inputs:
   storagetier:
     type: string
@@ -19,21 +19,19 @@ inputs:
     enum:
       - Small
       - Standard
-  count:
-    type: integer
-    enum:
-      - 1
-      - 2
-      - 3
 resources:
   Cloud_Machine_1:
     type: Cloud.Machine
     properties:
       image: CentOS7
       flavor: '${input.serverSize}'
-      count: '${input.count}'
       networks:
         - network: '${resource.Cloud_NSX_Network_1.id}'
+          tags:
+            - value: production
+              key: environment
+            - value: pci
+              key: compliance
       customizationSpec: custSpec-CentOS7
       constraints:
         - tag: '${"serviceLevel:" + to_lower(input.serviceLevel)}'
@@ -49,7 +47,6 @@ resources:
   Cloud_NSX_Network_1:
     type: Cloud.NSX.Network
     properties:
-      networkType: existing
+      networkType: routed
       constraints:
-        - tag: 'environment:sandbox'
-        - tag: 'staticNetwork:DHCP'
+        - tag: 'dynamicNetwork:Routed'

@@ -1,5 +1,5 @@
 formatVersion: 1
-name: gitimport
+name: Existing Network CentOS
 inputs:
   storagetier:
     type: string
@@ -51,5 +51,4 @@ resources:
     properties:
       networkType: existing
       constraints:
-        - tag: 'environment:sandbox'
         - tag: 'staticNetwork:DHCP'
