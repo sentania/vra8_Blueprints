@@ -1,16 +1,17 @@
 formatVersion: 1
 name: Lab Multi OS and VM Selection
-version: 1.0
+version: 1.1
 description: Installs multiple basic servers in my Lab
 inputs:
-  deploymentTarget:
+  serviceLevel:
     type: string
     description: Cloud Target
     title: Cloud Target
     enum:
-      - comp
-      - cloud
-    default: comp
+      - test
+      - sandbox
+      - production
+    default: sandbox
   flavor:
     type: string
     enum:
@@ -31,7 +32,7 @@ resources:
     type: Cloud.Machine
     properties:
       constraints:
-        - tag: '${input.deploymentTarget}'
+        - tag: '${"serviceLevel:" + to_lower(input.serviceLevel)}'
       name: MultiOSVM
       image: '${input.image}'
       flavor: '${input.flavor}'
@@ -42,8 +43,8 @@ resources:
         constraints:
           - tag: '${input.deploymentTarget}'
   ServerNetwork:
-    type: Cloud.Network
+    type: Cloud.NSX.Network
     properties:
-      networkType: existing
+      networkType: routed
       constraints:
-        - tag: '${input.deploymentTarget}'
+        - tag: 'dynamicNetwork:Routed'
