@@ -1,5 +1,6 @@
 formatVersion: 1
 name: NSX Dynamic CentOS
+version: 1.0
 inputs:
   storagetier:
     type: string
