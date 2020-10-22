@@ -1,6 +1,6 @@
 formatVersion: 1
 name: Multi-Cloud Web App
-version: 1.0
+version: 3.0
 inputs:
   environment:
     type: string
