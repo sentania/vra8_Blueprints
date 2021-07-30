@@ -1,6 +1,6 @@
 formatVersion: 1
 name: Lab Multi OS and VM Selection
-version: 1.2
+version: 1.2.1
 description: Installs multiple basic servers in my Lab
 inputs:
   serviceLevel:
@@ -41,7 +41,7 @@ resources:
           network: '${resource.ServerNetwork.id}'
       storage:
         constraints:
-          - tag: '${input.deploymentTarget}'
+          - tag: '${"serviceLevel:" + to_lower(input.serviceLevel)}'
   ServerNetwork:
     type: Cloud.NSX.Network
     properties:
