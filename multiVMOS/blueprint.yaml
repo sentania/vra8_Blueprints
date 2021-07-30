@@ -1,12 +1,12 @@
 formatVersion: 1
 name: Lab Multi OS and VM Selection
-version: 1.1
+version: 1.2
 description: Installs multiple basic servers in my Lab
 inputs:
   serviceLevel:
     type: string
-    description: Cloud Target
-    title: Cloud Target
+    description: VM Service Level
+    title: Service Level
     enum:
       - test
       - sandbox
@@ -24,7 +24,7 @@ inputs:
     type: string
     enum:
       - CentOS7
-      - Windows2019
+      - Windows 2019
     title: OS Image
     default: CentOS7
 resources:
@@ -47,4 +47,4 @@ resources:
     properties:
       networkType: routed
       constraints:
-        - tag: 'dynamicNetwork:Routed'
+        - tag: 'envrionment:privatecloud'
