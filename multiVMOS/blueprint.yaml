@@ -47,4 +47,4 @@ resources:
     properties:
       networkType: routed
       constraints:
-        - tag: 'envrionment:privatecloud'
+        - tag: 'environment:privatecloud'
