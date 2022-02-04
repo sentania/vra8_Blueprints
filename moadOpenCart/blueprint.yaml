@@ -65,9 +65,6 @@ resources:
       flavor: '${input.size}'
       constraints:
         - tag: '${"serviceLevel:" + to_lower(input.serviceLevel)}'
-      storage:
-        constraints:
-          - tag: '${"serviceLevel:" + to_lower(input.serviceLevel)}'
       networks:
         - network: '${resource.Cloud_Network_1.id}'
           tags:
@@ -139,9 +136,6 @@ resources:
           key: serverType
       constraints:
         - tag: '${"serviceLevel:" + to_lower(input.serviceLevel)}'
-      storage:
-        constraints:
-          - tag: '${"serviceLevel:" + to_lower(input.serviceLevel)}'
       networks:
         - network: '${resource.Cloud_Network_1.id}'
           tags:
@@ -251,9 +245,6 @@ resources:
       name: '${self.resourceName}'
       constraints:
         - tag: '${"serviceLevel:" + to_lower(input.serviceLevel)}'
-      storage:
-        constraints:
-          - tag: '${"serviceLevel:" + to_lower(input.serviceLevel)}'
       networks:
         - network: '${resource.Cloud_Network_1.id}'
           tags:
