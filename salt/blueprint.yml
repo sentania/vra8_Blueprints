@@ -1,0 +1,35 @@
+formatVersion: 1
+version: 1.1.2
+inputs: {}
+resources:
+  Cloud_SaltStack_1:
+    type: Cloud.SaltStack
+    properties:
+      hosts:
+        - ${resource.Cloud_Machine_1.id}
+      masterId: saltstack_enterprise_installer
+      stateFiles:
+        - /presence/init.sls
+      saltEnvironment: base
+  Cloud_Machine_1:
+    type: Cloud.Machine
+    properties:
+      remoteAccess:
+        authentication: usernamePassword
+        username: labuser
+        password: VMware1!
+      image: centos7
+      flavor: Small
+      networks:
+        - network: ${resource.Cloud_NSX_Network_1.id}
+          assignment: static
+      customizationSpec: custSpec-CentOS7
+      tags:
+        - key: protection
+          value: bkupnoCred
+        - key: operatingSystem
+          value: centOS
+  Cloud_NSX_Network_1:
+    type: Cloud.NSX.Network
+    properties:
+      networkType: existing
