@@ -1,0 +1,40 @@
+formatVersion: 1
+version: 1.1.2
+inputs:
+  serviceLevel:
+    type: string
+    enum:
+      - sandbox
+      - test
+      - production
+resources:
+  Cloud_SaltStack_1:
+    type: Cloud.SaltStack
+    properties:
+      hosts:
+        - ${resource.Cloud_Machine_1.id}
+      masterId: saltstack_enterprise_installer
+      stateFiles:
+        - /presence/init.sls
+        - /nginx/init.sls
+      saltEnvironment: sse
+  Cloud_Machine_1:
+    type: Cloud.Machine
+    properties:
+      remoteAccess:
+        authentication: usernamePassword
+        username: labuser
+        password: VMware1!
+      image: centos7
+      flavor: Small
+      networks:
+        - network: ${resource.Cloud_NSX_Network_1.id}
+          assignment: static
+      customizationSpec: custSpec-CentOS7
+      tags:
+        - value: environment
+          key: ${to_lower(input.serviceLevel)}
+  Cloud_NSX_Network_1:
+    type: Cloud.NSX.Network
+    properties:
+      networkType: routed
