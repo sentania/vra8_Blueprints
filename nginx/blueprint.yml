@@ -34,10 +34,6 @@ resources:
       tags:
         - value: environment
           key: ${to_lower(input.serviceLevel)}
-        - value: WebServer
-          key: Role
-        - value: AllowSSH
-          key: Role
   Cloud_NSX_Network_1:
     type: Cloud.NSX.Network
     properties:
