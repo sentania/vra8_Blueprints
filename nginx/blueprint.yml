@@ -15,7 +15,7 @@ resources:
         - ${resource.Cloud_Machine_1.id}
       masterId: saltstack_enterprise_installer
       stateFiles:
-        - /presence/init.sls
+        - /nginx/init.sls
       saltEnvironment: sse
       variables: null
   Cloud_Machine_1:
