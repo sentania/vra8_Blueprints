@@ -15,7 +15,7 @@ resources:
         - ${resource.Cloud_Machine_1.id}
       masterId: saltstack_enterprise_installer
       stateFiles:
-        - /nginx/init.sls
+        - /presence/init.sls
       saltEnvironment: sse
       variables: null
   Cloud_Machine_1:
@@ -26,7 +26,7 @@ resources:
         username: labuser
         password: VMware1!
       image: centos7
-      flavor: Small
+      flavor: Medium
       customizationSpec: custSpec-CentOS7
       storage:
         constraints:
