@@ -1,0 +1,71 @@
+formatVersion: 1
+version: 1.1.2
+inputs:
+  serviceLevel:
+    type: string
+    enum:
+      - sandbox
+      - test
+      - production
+  vmIP:
+    type: string
+    title: VM IP Address
+    default: 192.168.1.2
+  macAddress:
+    type: string
+    title: VM Target MAC Address
+    default: 123456
+resources:
+  Cloud_NSX_Gateway_1:
+    type: Cloud.NSX.Gateway
+    properties:
+      networks:
+        - ${resource.Cloud_NSX_Network_1.id}
+  Cloud_NSX_Nat_1:
+    type: Cloud.NSX.Nat
+    properties:
+      gateway: ${resource.Cloud_NSX_Gateway_1.id}
+      natRules:
+        - kind: NAT44
+          type: DNAT
+          index: 0
+          protocol: TCP
+          sourceIPs: any
+          description: ssh
+          sourcePorts: any
+          translatedPorts: '22'
+          destinationPorts: any
+          translatedInstance: ${resource.Cloud_Machine_1.networks[0].id}
+        - kind: NAT44
+          type: DNAT
+          index: 0
+          protocol: TCP
+          sourceIPs: any
+          description: http
+          sourcePorts: any
+          translatedPorts: '80'
+          destinationPorts: any
+          translatedInstance: ${resource.Cloud_Machine_1.networks[0].id}
+      name: SSH
+  Cloud_Machine_1:
+    type: Cloud.Machine
+    properties:
+      image: centos7
+      flavor: Small
+      natProps.vmIP: ${input.vmIP}
+      natProps.macAddress: ${input.macAddress}
+      tags:
+        - key: serviceLevel
+          value: ${to_lower(input.serviceLevel)}
+      storage:
+        constraints:
+          - tag: '!storagetier:admin'
+      networks:
+        - network: ${resource.Cloud_NSX_Network_1.id}
+      constraints:
+        - tag: ${"serviceLevel:" + to_lower(input.serviceLevel)}
+  Cloud_NSX_Network_1:
+    type: Cloud.NSX.Network
+    properties:
+      networkType: outbound
+      networkCidr: 192.168.1.0/24
