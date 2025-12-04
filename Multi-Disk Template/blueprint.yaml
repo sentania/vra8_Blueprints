@@ -1,6 +1,6 @@
 formatVersion: 1
 name: Multi-Disk Template
-version: 1.1.2
+version: 1.2.0
 inputs:
   operatingSystem:
     type: string
